@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import Filters from "./Filters";
+import Filters from "./Filters/Filters";
+import MoviesList from "./Movies/MoviesList";
 
 export default class App extends Component {
   render() {
@@ -16,7 +17,7 @@ export default class App extends Component {
             </div>
           </div>
           <div className="col-8">
-            
+            <MoviesList />
           </div>   
         </div>     
       </div>
