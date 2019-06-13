@@ -13,7 +13,7 @@ export default class MovieItem extends React.Component {
         />
         <div className="card-body">
           <h6 className="card-title">{item.title}</h6>
-          <div className="card-text">Рейтинг: {item.vote_average}</div>
+          <div className="card-text">Рейтинг: {item.vote_average} {item.release_date}</div>
         </div>
       </div>
     );
