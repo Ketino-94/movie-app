@@ -6,8 +6,7 @@ export default class GenreMovie extends Component {
     super();
 
     this.state = {
-      genres: [],
-      filtersGenre: []
+      genres: []
     };
   }
 
@@ -28,26 +27,11 @@ export default class GenreMovie extends Component {
     this.getGenres();
   }
 
-  onChange = (id) => {
-    if (this.state.filtersGenre.includes(id)) {
-      let newState = this.state.filtersGenre.filter( item => item !== id)
-      this.setState({
-        filtersGenre: newState
-      })
-    } else {
-    this.setState(prevState =>({
-      filtersGenre: [
-        ...prevState.filtersGenre, id
-      ]
-      }), () => console.log(this.state.filtersGenre));
-      
-    }
-  }
-  
+
 
   render() {
     const { genres } = this.state;
-    console.log(this.state.filtersGenre);
+    const { onChangeGenres} = this.props;
     return(
       <div className="form-group">
         <p>Жанры:</p>
@@ -58,7 +42,7 @@ export default class GenreMovie extends Component {
                       className="form-check-input"
                       name="genre" 
                       id={genre.id} 
-                      onChange={this.onChange.bind(null, genre.id)}/>
+                      onChange={onChangeGenres.bind(null, genre.id)}/>
               <label  htmlFor={genre.id} 
                       className="form-check-label"> {genre.name} </label>
              </div>

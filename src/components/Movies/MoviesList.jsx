@@ -7,7 +7,8 @@ export default class MovieList extends Component {
     super();
 
     this.state = {
-      movies: []
+      movies: [],
+      filterMovies: []
     };
   }
 
@@ -20,10 +21,10 @@ export default class MovieList extends Component {
       })
       .then(data => {
         this.setState({
-          movies: data.results
+          movies: data.results,
+          filterMovies: data.results
         });
       });
-    console.log(link)
   }
 
   componentDidMount() {
@@ -51,16 +52,39 @@ export default class MovieList extends Component {
       this.getMovies(this.props.filters, 1);
       console.log(this.props.filters.primary_release_year)
     }
+
+    // if (this.props.filtersGenre.includes(id) ) {
+
+    // }
+    if (this.props.filtersGenre !== prevProps.filtersGenre ) {
+      this.getGenreMovie() ;
+    }
   }
 
+  getGenreMovie = () => {
+    console.log('filters',this.props.filtersGenre);
+      const filtersGenreMovie = this.state.movies.filter(movie => {
+        // console.log('id',movie.genre_ids);
+        
+        return movie.genre_ids.some( id => {
+          return this.props.filtersGenre.includes(id)
+        })
+      })
+      console.log("3", filtersGenreMovie);
+      this.setState({
+        filterMovies: filtersGenreMovie
+      })
+  }
+
+
   render() {
-    const { movies } = this.state;
-    console.log('movies', movies);
+    const { filterMovies } = this.state;
+    // console.log('movies', movies);
     return (
       <div className="row">
-        {movies.map(movie => {
+        {filterMovies.map(movie => {
           return (
-            <div key={movie.id} className="col-6 mb-4">
+            <div key={movie.id} className="col-6 mb-4" >
               <MovieItem item={movie} />
             </div>
           );

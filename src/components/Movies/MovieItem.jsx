@@ -14,7 +14,8 @@ export default class MovieItem extends React.Component {
         />
         <div className="card-body">
           <h6 className="card-title">{item.title}</h6>
-          <div className="card-text">Рейтинг: {item.vote_average} {moment(item.release_date).year()}</div>
+          <div className="card-text">Рейтинг: {item.vote_average} <br/> {moment(item.release_date).year()}
+          </div>
         </div>
       </div>
     );

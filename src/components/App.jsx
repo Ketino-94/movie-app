@@ -10,6 +10,7 @@ export default class App extends Component {
       sort_by: 'vote_average.desc',
       primary_release_year: '2013'
     },
+    filtersGenre: [],
     page: 1
   }
 
@@ -29,8 +30,23 @@ export default class App extends Component {
     })
   }
 
+  onChangeGenres = (id) => {
+    if (this.state.filtersGenre.includes(id)) {
+      let newState = this.state.filtersGenre.filter( item => item !== id)
+      this.setState({
+        filtersGenre: newState
+      })
+    } else {
+    this.setState(prevState =>({
+      filtersGenre: [
+        ...prevState.filtersGenre, id
+      ]
+      }));
+    }
+  }
+
   render() {
-    const {filters, page} = this.state;
+    const {filters, page, filtersGenre} = this.state;
     return(
       <div className="container">
         <div className="row mt-4">
@@ -41,6 +57,7 @@ export default class App extends Component {
                 <Filters  filters={filters}
                           page={page}
                           onChangePage={this.onChangePage}
+                          onChangeGenres={this.onChangeGenres}
                           onChangeFilters={this.onChangeFilters}  />
               </div>
             </div>
@@ -48,6 +65,7 @@ export default class App extends Component {
           <div className="col-8">
             <MoviesList filters={filters}
                         page={page} 
+                        filtersGenre={filtersGenre}
                         onChangePage={this.onChangePage}/>
           </div>   
         </div>     
