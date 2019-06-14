@@ -1,33 +1,9 @@
 import React, { Component } from "react";
 
-import { API_URL, API_KEY_3 } from "../../api/api";
+const year = [2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 export default class SortByYear extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      options: []
-    };
-  }
-
-  getYear = () => {
-    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU`;
-    fetch(link)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          options: data.results
-        });
-      });
-  }
-  componentDidMount() {
-    this.getYear();
-  }
-
-  
   render() {
     const {primary_release_year , onChangeFilters} = this.props; 
     return(
@@ -38,10 +14,9 @@ export default class SortByYear extends Component {
                 name="primary_release_year"
                 value={primary_release_year} 
                 onChange={onChangeFilters}>
-          {this.state.options.map( option => {
-            return (
-            <option key={option.id} value={option.release_date}>{option.release_date}</option>
-          )})}
+          {year.map( option => (
+            <option key={option} value={option}>{option}</option>
+          ))}
         </select>   
       </div>
     )

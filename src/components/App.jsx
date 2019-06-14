@@ -8,7 +8,7 @@ export default class App extends Component {
   state = {
     filters: {
       sort_by: 'vote_average.desc',
-      primary_release_year: ''
+      primary_release_year: '2013'
     },
     page: 1
   }

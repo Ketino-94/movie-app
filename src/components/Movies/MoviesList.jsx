@@ -23,9 +23,11 @@ export default class MovieList extends Component {
           movies: data.results
         });
       });
+    console.log(link)
   }
 
   componentDidMount() {
+    // console.log(window.location.search.substring) ;
     this.getMovies(this.props.filters, this.props.page);
   }
   
@@ -36,7 +38,6 @@ export default class MovieList extends Component {
   // }
 
   componentDidUpdate(prevProps) {
-    console.log( prevProps.page, this.props.page)
     if(this.props.filters.sort_by !== prevProps.filters.sort_by) {
       this.props.onChangePage(1);
       this.getMovies(this.props.filters, 1);
@@ -47,15 +48,14 @@ export default class MovieList extends Component {
     }
 
     if(this.props.filters.primary_release_year !== prevProps.filters.primary_release_year) {
-      this.props.onChangePage(1);
       this.getMovies(this.props.filters, 1);
-      console.log(prevProps.filters.primary_release_year)
+      console.log(this.props.filters.primary_release_year)
     }
   }
 
   render() {
     const { movies } = this.state;
-    // console.log('movies', movies);
+    console.log('movies', movies);
     return (
       <div className="row">
         {movies.map(movie => {
