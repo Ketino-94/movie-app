@@ -1,2 +1,5 @@
 .body {
   background: #f0f0f0ff; }
+  .invalid-feedback {
+    display: block;
+}
