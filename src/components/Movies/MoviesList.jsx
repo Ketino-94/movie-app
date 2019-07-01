@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MovieItem from "./MovieItem";
 import { API_URL, API_KEY_3 } from "../../api/api";
+import moment from 'moment' ;
 
 export default class MovieList extends Component {
   constructor() {
@@ -8,13 +9,14 @@ export default class MovieList extends Component {
 
     this.state = {
       movies: [],
-      filterMovies: []
+      filterMovies: [],
+      year: ''
     };
   }
 
   getMovies = (filters, page) => {
-    const {sort_by, primary_release_year} = filters; 
-    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}&year=${primary_release_year}`;
+    const {sort_by} = filters; 
+    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}`;
     fetch(link)
       .then(response => {
         return response.json();
@@ -48,16 +50,15 @@ export default class MovieList extends Component {
       this.getMovies(this.props.filters, this.props.page);
     }
 
-    if(this.props.filters.primary_release_year !== prevProps.filters.primary_release_year) {
-      this.getMovies(this.props.filters, 1);
-      console.log(this.props.filters.primary_release_year)
-    }
-
     // if (this.props.filtersGenre.includes(id) ) {
 
     // }
     if (this.props.filtersGenre !== prevProps.filtersGenre ) {
       this.getGenreMovie() ;
+    }
+
+    if (this.props.primary_release_year !== prevProps.primary_release_year ) {
+      this.getYearMovie() ;
     }
   }
 
@@ -70,16 +71,26 @@ export default class MovieList extends Component {
           return this.props.filtersGenre.includes(id)
         })
       })
-      console.log("3", filtersGenreMovie);
       this.setState({
         filterMovies: filtersGenreMovie
       })
   }
 
+  getYearMovie = () => {
+    const year_movie = this.state.movies.filter( movie => {
+        return moment(movie.release_date).year() === parseInt(this.props.primary_release_year, 10)
+      //  console.log('year-movie', typeof moment(movie.release_date).year() );
+    });
+    this.setState({
+      filterMovies: year_movie
+    })
+    console.log('year-movie',  parseInt(this.props.primary_release_year, 10) );
+  }
+
 
   render() {
     const { filterMovies } = this.state;
-    // console.log('movies', movies);
+    // console.log('movies', filterMovies);
     return (
       <div className="row">
         {filterMovies.map(movie => {

@@ -130,7 +130,7 @@ export default class Login extends React.Component {
           <div className="form-group">
             <label htmlFor="username">Пользователь</label>
             <input  type="text"
-                    className="form-control"
+                    className={errors.username ? "form-control invalid" : "form-control"}
                     id="username"
                     placeholder="Пользователь"
                     name="username"

@@ -6,13 +6,13 @@ import GenreMovie from "./GenreMovie";
 
 export default class Filters extends Component {
   render() {
-    const {filters: {sort_by, primary_release_year, with_genres}, onChangeGenres, onChangeFilters, page, onChangePage} = this.props; 
+    const {filters: {sort_by, primary_release_year, with_genres}, onChangeGenres, onChangeFilters, onChangYear, page, onChangePage} = this.props; 
     return(
       <form className="mb-3">
         <SortBy value={sort_by} 
                 onChangeFilters={onChangeFilters}/>
         <SortByYear value={primary_release_year}
-                onChangeFilters={onChangeFilters}/>
+                onChangYear={onChangYear}/>
         <GenreMovie with_genres={with_genres} 
                     onChangeGenres={onChangeGenres}
                     onChangeFilters={onChangeFilters} />

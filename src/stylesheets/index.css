@@ -3,3 +3,5 @@
   .invalid-feedback {
     display: block;
 }
+input.invalid {
+  border-color: #dc3545; }

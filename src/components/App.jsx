@@ -14,9 +14,9 @@ export default class App extends Component {
     user: null,
     session_id: null, 
     filters: {
-      sort_by: 'vote_average.desc',
-      primary_release_year: '2013'
+      sort_by: 'vote_average.desc'
     },
+    primary_release_year: 2013,
     filtersGenre: [],
     page: 1
   }
@@ -68,6 +68,15 @@ export default class App extends Component {
     }
   }
 
+  onChangYear = (e) => {
+    // const newFilters = {
+    //   [e.target.name]: e.target.value
+    // }
+    this.setState({
+      primary_release_year: e.target.value
+    });
+  } 
+
   componentDidMount() {
     const session_id = cookies.get("session_id");
     if (session_id) {
@@ -80,7 +89,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {filters, page, filtersGenre, user} = this.state;
+    const {filters, page, filtersGenre, user, primary_release_year} = this.state;
     return(
       <div>
         <Header user={user} 
@@ -96,13 +105,15 @@ export default class App extends Component {
                             page={page}
                             onChangePage={this.onChangePage}
                             onChangeGenres={this.onChangeGenres}
-                            onChangeFilters={this.onChangeFilters}  />
+                            onChangeFilters={this.onChangeFilters}  
+                            onChangYear={this.onChangYear}/>
                 </div>
               </div>
             </div>
             <div className="col-8">
               <MoviesList filters={filters}
                           page={page} 
+                          primary_release_year={primary_release_year}
                           filtersGenre={filtersGenre}
                           onChangePage={this.onChangePage}/>
             </div>   
