@@ -1,26 +1,14 @@
 import React, { Component } from 'react'
 
-<<<<<<< HEAD
-import Filters from "./Filters/Filters";
-import MoviesContainer from "./Movies/MoviesContainer";
-import Header from "./Header/Header";
-import { API_URL, API_KEY_3, fetchApi } from "../api/api";
-import Cookies from 'universal-cookie';
- 
-const cookies = new Cookies();
-
-export const AppContext = React.createContext();
-
-export default class App extends Component {
-=======
 import Filters from './Filters/Filters'
-import MoviesList from './Movies/MoviesList'
+import MoviesContainer from './Movies/MoviesContainer'
 import Header from './Header/Header'
 import { API_URL, API_KEY_3, fetchApi } from '../api/api'
 import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
->>>>>>> master
+
+export const AppContext = React.createContext()
 
 export default class App extends Component {
 	state = {
@@ -99,43 +87,57 @@ export default class App extends Component {
 		}
 	}
 
-  render() {
-    const {filters, page, filtersGenre, user, primary_release_year} = this.state;
-    return(
-      <AppContext.Provider value={{
-        user: user,
-        updateUser: this.updateUser
-      }}>
-        <div>
-          <Header user={user} 
-                  updateUser={this.updateUser} 
-                  updateSessionId={this.updateSessionId}/>
-          <div className="container">
-            <div className="row mt-4">
-              <div className="col-4">
-                <div className="card" style={{width: "100%" }}>
-                  <div className="card-body">
-                    <h3>Фильтры:</h3>
-                    <Filters  filters={filters}
-                              page={page}
-                              onChangePage={this.onChangePage}
-                              onChangeGenres={this.onChangeGenres}
-                              onChangeFilters={this.onChangeFilters}  
-                              onChangYear={this.onChangYear}/>
-                  </div>
-                </div>
-              </div>
-              <div className="col-8">
-                <MoviesContainer filters={filters}
-                            page={page} 
-                            primary_release_year={primary_release_year}
-                            filtersGenre={filtersGenre}
-                            onChangePage={this.onChangePage}/>
-              </div>   
-            </div>     
-          </div>
-        </div>
-      </AppContext.Provider>
-    );
-  }
+	render() {
+		const {
+			filters,
+			page,
+			filtersGenre,
+			user,
+			primary_release_year,
+		} = this.state
+		return (
+			<AppContext.Provider
+				value={{
+					user: user,
+					updateUser: this.updateUser,
+				}}
+			>
+				<div>
+					<Header
+						user={user}
+						updateUser={this.updateUser}
+						updateSessionId={this.updateSessionId}
+					/>
+					<div className="container">
+						<div className="row mt-4">
+							<div className="col-4">
+								<div className="card" style={{ width: '100%' }}>
+									<div className="card-body">
+										<h3>Фильтры:</h3>
+										<Filters
+											filters={filters}
+											page={page}
+											onChangePage={this.onChangePage}
+											onChangeGenres={this.onChangeGenres}
+											onChangeFilters={this.onChangeFilters}
+											onChangYear={this.onChangYear}
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="col-8">
+								<MoviesContainer
+									filters={filters}
+									page={page}
+									primary_release_year={primary_release_year}
+									filtersGenre={filtersGenre}
+									onChangePage={this.onChangePage}
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</AppContext.Provider>
+		)
+	}
 }
