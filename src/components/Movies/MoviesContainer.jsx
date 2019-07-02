@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import MovieList from "./MovieList";
+import MoviesList from "./MoviesList";
 import { API_URL, API_KEY_3 } from "../../api/api";
 import moment from 'moment' ;
 
-export default class MovieList extends Component {
+export default class MoviesContainer extends Component {
   constructor() {
     super();
 
@@ -91,8 +91,6 @@ export default class MovieList extends Component {
   render() {
     const { filterMovies } = this.state;
     // console.log('movies', filterMovies);
-    return (
-      <MovieList filterMovies={filterMovies}/>
-    );
+    return <MoviesList filterMovies={filterMovies} /> ;
   }
 }

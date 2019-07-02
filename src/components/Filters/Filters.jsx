@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import SortBy from "./SortBy";
 import SortByYear from "./SortByYear";
-import GenreMovie from "./GenreMovie";
+import GenresContainer from "./GenresContainer";
 
 export default class Filters extends Component {
   render() {
@@ -13,7 +13,7 @@ export default class Filters extends Component {
                 onChangeFilters={onChangeFilters}/>
         <SortByYear value={primary_release_year}
                 onChangYear={onChangYear}/>
-        <GenreMovie with_genres={with_genres} 
+        <GenresContainer with_genres={with_genres} 
                     onChangeGenres={onChangeGenres}
                     onChangeFilters={onChangeFilters} />
         <div className="btn-group" >

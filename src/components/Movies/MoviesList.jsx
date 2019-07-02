@@ -1,8 +1,9 @@
 import React from "react";
 import MovieItem from "./MovieItem";
+import PropTypes from "prop-types";
 
 
-const MovieList = (props) => {
+const MoviesList = ({filterMovies}) => (
   <div className="row">
     {filterMovies.map(movie => {
       return (
@@ -12,5 +13,14 @@ const MovieList = (props) => {
       );
     })}
   </div>
-}
-export default MovieList
+)
+
+MoviesList.defaultProps = {
+  filterMovies: []
+};
+
+MoviesList.propTypes = {
+  filterMovies: PropTypes.array.isRequired
+};
+
+export default MoviesList; 

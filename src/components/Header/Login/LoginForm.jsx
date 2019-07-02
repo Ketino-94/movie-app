@@ -1,5 +1,6 @@
 import React from "react";
 import { API_URL, API_KEY_3, fetchApi } from "../../../api/api";
+import { AppContext } from "../../App";
 
 export default class Login extends React.Component {
   state = {

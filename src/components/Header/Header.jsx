@@ -13,7 +13,7 @@ class Header extends React.Component {
               <a className="nav-link">Home</a>
             </li>
           </ul>
-          {user ? (<User user={user}/> ):  (<Login updateUser={updateUser} updateSessionId={updateSessionId} />)}
+          {user ? (<User /> ):  (<Login updateUser={updateUser} updateSessionId={updateSessionId} />)}
         </div>
       </nav>
     );
