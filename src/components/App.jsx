@@ -27,15 +27,15 @@ export default class App extends Component {
     })
   }
 
-  updateSessionId = session_id => {
-    cookies.set("session_id", session_id, { 
-      path: '/' ,
-      maxAge: 2592000 
-    });
-    this.setState({
-      session_id
-    })
-  }
+  // updateSessionId = session_id => {
+  //   cookies.set("session_id", session_id, { 
+  //     path: '/' ,
+  //     maxAge: 0 
+  //   });
+  //   this.setState({
+  //     session_id
+  //   })
+  // }
 
   onChangeFilters = (e) => {
     const newFilters = {
@@ -69,12 +69,12 @@ export default class App extends Component {
   }
 
   onChangYear = (e) => {
-    // const newFilters = {
-    //   [e.target.name]: e.target.value
-    // }
-    this.setState({
-      primary_release_year: e.target.value
-    });
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevState => ({
+      [name]: value,
+      ...prevState.primary_release_year
+    }));
   } 
 
   componentDidMount() {
