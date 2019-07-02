@@ -1,26 +1,25 @@
-import React from "react";
-import MovieItem from "./MovieItem";
-import PropTypes from "prop-types";
+import React from 'react'
+import MovieItem from './MovieItem'
+import PropTypes from 'prop-types'
 
-
-const MoviesList = ({filterMovies}) => (
-  <div className="row">
-    {filterMovies.map(movie => {
-      return (
-        <div key={movie.id} className="col-6 mb-4" >
-          <MovieItem item={movie} />
-        </div>
-      );
-    })}
-  </div>
+const MoviesList = ({ filterMovies }) => (
+	<div className="row">
+		{filterMovies.map(movie => {
+			return (
+				<div key={movie.id} className="col-6 mb-4">
+					<MovieItem item={movie} />
+				</div>
+			)
+		})}
+	</div>
 )
 
 MoviesList.defaultProps = {
-  filterMovies: []
-};
+	filterMovies: [],
+}
 
 MoviesList.propTypes = {
-  filterMovies: PropTypes.array.isRequired
-};
+	filterMovies: PropTypes.array.isRequired,
+}
 
-export default MoviesList; 
+export default MoviesList

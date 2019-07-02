@@ -24,3 +24,4 @@ GenreMovie.defaultProps = {
 };
 
 export default GenreMovie;
+

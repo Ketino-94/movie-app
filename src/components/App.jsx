@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
+<<<<<<< HEAD
 import Filters from "./Filters/Filters";
 import MoviesContainer from "./Movies/MoviesContainer";
 import Header from "./Header/Header";
@@ -11,84 +12,92 @@ const cookies = new Cookies();
 export const AppContext = React.createContext();
 
 export default class App extends Component {
+=======
+import Filters from './Filters/Filters'
+import MoviesList from './Movies/MoviesList'
+import Header from './Header/Header'
+import { API_URL, API_KEY_3, fetchApi } from '../api/api'
+import Cookies from 'universal-cookie'
 
-  state = {
-    user: null,
-    session_id: null, 
-    filters: {
-      sort_by: 'vote_average.desc'
-    },
-    primary_release_year: 2013,
-    filtersGenre: [],
-    page: 1
-  }
+const cookies = new Cookies()
+>>>>>>> master
 
-  updateUser = user => {
-    this.setState({
-      user
-    })
-  }
+export default class App extends Component {
+	state = {
+		user: null,
+		session_id: null,
+		filters: {
+			sort_by: 'vote_average.desc',
+		},
+		primary_release_year: 2013,
+		filtersGenre: [],
+		page: 1,
+	}
 
-  // updateSessionId = session_id => {
-  //   cookies.set("session_id", session_id, { 
-  //     path: '/' ,
-  //     maxAge: 0 
-  //   });
-  //   this.setState({
-  //     session_id
-  //   })
-  // }
+	updateUser = user => {
+		this.setState({
+			user,
+		})
+	}
 
-  onChangeFilters = (e) => {
-    const newFilters = {
-      ...this.state.filter,
-      [e.target.name]: e.target.value
-    }
-    this.setState({
-      filters: newFilters
-    });
-  }
+	// updateSessionId = session_id => {
+	//   cookies.set("session_id", session_id, {
+	//     path: '/' ,
+	//     maxAge: 0
+	//   });
+	//   this.setState({
+	//     session_id
+	//   })
+	// }
 
-  onChangePage = page => {
-    this.setState({
-      page
-    })
-  }
+	onChangeFilters = e => {
+		const newFilters = {
+			...this.state.filter,
+			[e.target.name]: e.target.value,
+		}
+		this.setState({
+			filters: newFilters,
+		})
+	}
 
-  onChangeGenres = (id) => {
-    if (this.state.filtersGenre.includes(id)) {
-      let newState = this.state.filtersGenre.filter( item => item !== id)
-      this.setState({
-        filtersGenre: newState
-      })
-    } else {
-    this.setState(prevState =>({
-      filtersGenre: [
-        ...prevState.filtersGenre, id
-      ]
-      }));
-    }
-  }
+	onChangePage = page => {
+		this.setState({
+			page,
+		})
+	}
 
-  onChangYear = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState(prevState => ({
-      [name]: value,
-      ...prevState.primary_release_year
-    }));
-  } 
+	onChangeGenres = id => {
+		if (this.state.filtersGenre.includes(id)) {
+			let newState = this.state.filtersGenre.filter(item => item !== id)
+			this.setState({
+				filtersGenre: newState,
+			})
+		} else {
+			this.setState(prevState => ({
+				filtersGenre: [...prevState.filtersGenre, id],
+			}))
+		}
+	}
 
-  componentDidMount() {
-    const session_id = cookies.get("session_id");
-    if (session_id) {
-      fetchApi(
-        `${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
-      ).then(user => {
-        this.updateUser(user);
-      });
-    }
-  }
+	onChangYear = e => {
+		const name = e.target.name
+		const value = e.target.value
+		this.setState(prevState => ({
+			[name]: value,
+			...prevState.primary_release_year,
+		}))
+	}
+
+	componentDidMount() {
+		const session_id = cookies.get('session_id')
+		if (session_id) {
+			fetchApi(
+				`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
+			).then(user => {
+				this.updateUser(user)
+			})
+		}
+	}
 
   render() {
     const {filters, page, filtersGenre, user, primary_release_year} = this.state;
