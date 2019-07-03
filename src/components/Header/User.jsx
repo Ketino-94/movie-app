@@ -30,4 +30,4 @@ const UserContainer = () => {
 
 UserContainer.displayName = 'UserContainer'
 
-export default UserContainer
+export default UserContainer; 

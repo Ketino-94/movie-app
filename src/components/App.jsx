@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Filters from './Filters/Filters'
-import MoviesContainer from './Movies/MoviesContainer'
+import MoviesList from './Movies/MoviesList'
 import Header from './Header/Header'
 import { API_URL, API_KEY_3, fetchApi } from '../api/api'
 import Cookies from 'universal-cookie'
@@ -103,11 +103,7 @@ export default class App extends Component {
 				}}
 			>
 				<div>
-					<Header
-						user={user}
-						updateUser={this.updateUser}
-						updateSessionId={this.updateSessionId}
-					/>
+					<Header user={user} updateSessionId={this.updateSessionId} />
 					<div className="container">
 						<div className="row mt-4">
 							<div className="col-4">
@@ -126,7 +122,7 @@ export default class App extends Component {
 								</div>
 							</div>
 							<div className="col-8">
-								<MoviesContainer
+								<MoviesList
 									filters={filters}
 									page={page}
 									primary_release_year={primary_release_year}
