@@ -1,6 +1,6 @@
 import React from 'react'
 import { API_URL, API_KEY_3, fetchApi } from '../../../api/api'
-import { AppContext } from '../../App'
+import AppContextHOC from '../../HOC/AppContextHOC'
 
 class LoginForm extends React.Component {
 	state = {
@@ -25,7 +25,6 @@ class LoginForm extends React.Component {
 	}
 
 	handleBlur = () => {
-		console.log('on blur')
 		const errors = this.validateFields()
 		if (Object.keys(errors).length > 0) {
 			this.setState(prevState => ({
@@ -99,13 +98,13 @@ class LoginForm extends React.Component {
 				)
 			})
 			.then(user => {
-				console.log('session', user)
-				this.props.updateUser(user)
 				this.setState(
 					{
-						submitting: true,
+						submitting: false,
 					},
-					() => this.props.updateUser(user)
+					() => {
+						this.props.updateUser(user)
+					}
 				)
 			})
 			.catch(error => {
@@ -219,11 +218,4 @@ class LoginForm extends React.Component {
 	}
 }
 
-export default props => {
-	console.log(props)
-	return (
-		<AppContext.Consumer>
-			{context => <LoginForm updateUser={context.updateUser} {...props} />}
-		</AppContext.Consumer>
-	)
-}
+export default AppContextHOC(LoginForm)

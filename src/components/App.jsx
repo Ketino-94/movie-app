@@ -28,15 +28,23 @@ export default class App extends Component {
 		})
 	}
 
-	// updateSessionId = session_id => {
-	//   cookies.set("session_id", session_id, {
-	//     path: '/' ,
-	//     maxAge: 0
-	//   });
-	//   this.setState({
-	//     session_id
-	//   })
-	// }
+	updateSessionId = session_id => {
+		cookies.set('session_id', session_id, {
+			path: '/',
+			maxAge: 2592000,
+		})
+		this.setState({
+			session_id,
+		})
+	}
+
+	onLogOut = () => {
+		cookies.remove('session_id')
+		this.setState({
+			session_id: null,
+			user: null,
+		})
+	}
 
 	onChangeFilters = e => {
 		const newFilters = {
@@ -83,6 +91,7 @@ export default class App extends Component {
 				`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
 			).then(user => {
 				this.updateUser(user)
+				this.updateSessionId(session_id)
 			})
 		}
 	}
@@ -94,16 +103,20 @@ export default class App extends Component {
 			filtersGenre,
 			user,
 			primary_release_year,
+			session_id,
 		} = this.state
 		return (
 			<AppContext.Provider
 				value={{
 					user: user,
+					session_id,
 					updateUser: this.updateUser,
+					updateSessionId: this.updateSessionId,
+					onLogOut: this.onLogOut,
 				}}
 			>
 				<div>
-					<Header user={user} updateSessionId={this.updateSessionId} />
+					<Header user={user} />
 					<div className="container">
 						<div className="row mt-4">
 							<div className="col-4">
