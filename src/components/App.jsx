@@ -5,6 +5,7 @@ import MoviesList from './Movies/MoviesList'
 import Header from './Header/Header'
 import { API_URL, API_KEY_3, fetchApi } from '../api/api'
 import Cookies from 'universal-cookie'
+import SelectionMovie from './SelectionMovie/SelectionMovie'
 
 const cookies = new Cookies()
 
@@ -20,6 +21,8 @@ export default class App extends Component {
 		primary_release_year: 2013,
 		filtersGenre: [],
 		page: 1,
+		favouriteMovie: [],
+		watchlistMovie: [],
 	}
 
 	updateUser = user => {
@@ -96,6 +99,20 @@ export default class App extends Component {
 		}
 	}
 
+	toggleClassLike = item => {
+		const newItem = item
+		this.setState(prevState => ({
+			favouriteMovie: [...prevState.favouriteMovie, newItem],
+		}))
+	}
+
+	toggleClassBookmark = item => {
+		const newItem = item
+		this.setState(prevState => ({
+			watchlistMovie: [...prevState.watchlistMovie, newItem],
+		}))
+	}
+
 	render() {
 		const {
 			filters,
@@ -118,8 +135,8 @@ export default class App extends Component {
 				<div>
 					<Header user={user} />
 					<div className="container">
-						<div className="row mt-4">
-							<div className="col-4">
+						<div className="d-flex justify-content-between">
+							<div className="p-2">
 								<div className="card" style={{ width: '100%' }}>
 									<div className="card-body">
 										<h3>Фильтры:</h3>
@@ -134,13 +151,21 @@ export default class App extends Component {
 									</div>
 								</div>
 							</div>
-							<div className="col-8">
+							<div className="p-2">
 								<MoviesList
 									filters={filters}
 									page={page}
 									primary_release_year={primary_release_year}
 									filtersGenre={filtersGenre}
 									onChangePage={this.onChangePage}
+									toggleClassLike={this.toggleClassLike}
+									toggleClassBookmark={this.toggleClassBookmark}
+								/>
+							</div>
+							<div className="p-2">
+								<SelectionMovie
+									favouriteMovie={this.state.favouriteMovie}
+									watchlistMovie={this.state.watchlistMovie}
 								/>
 							</div>
 						</div>

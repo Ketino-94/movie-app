@@ -78,6 +78,13 @@ export default Component =>
 
 		render() {
 			const { filterMovies } = this.state
-			return <Component filterMovies={filterMovies} />
+			const { toggleClassLike, toggleClassBookmark } = this.props
+			return (
+				<Component
+					filterMovies={filterMovies}
+					toggleClassLike={toggleClassLike}
+					toggleClassBookmark={toggleClassBookmark}
+				/>
+			)
 		}
 	}

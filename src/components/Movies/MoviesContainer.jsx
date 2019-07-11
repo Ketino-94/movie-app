@@ -33,12 +33,6 @@ export default class MoviesContainer extends Component {
 		this.getMovies(this.props.filters, this.props.page)
 	}
 
-	// componentWillReceiveProps(nextProps) {
-	//   if(nextProps.filters.sort_by !== this.props.filters.sort_by) {
-	//     this.getMovies(nextProps.filters);
-	//   }
-	// }
-
 	componentDidUpdate(prevProps) {
 		if (this.props.filters.sort_by !== prevProps.filters.sort_by) {
 			this.props.onChangePage(1)

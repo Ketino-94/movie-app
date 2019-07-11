@@ -118,6 +118,26 @@ class LoginForm extends React.Component {
 			})
 	}
 
+	getFavourite = () => {
+		fetchApi(
+			`${API_URL}/account/${this.props.session_id}/favorite?api_key=${API_KEY_3}`,
+			{
+				method: 'POST',
+				mode: 'cors',
+				headers: {
+					'Content-type': 'application/json',
+				},
+				body: JSON.stringify({
+					media_type: 'movie',
+					media_id: 550,
+					favorite: true,
+				}),
+			}
+		).then(() => {
+			this.props.onLogOut()
+		})
+	}
+
 	onLogin = e => {
 		e.preventDefault()
 		const errors = this.validateFields()

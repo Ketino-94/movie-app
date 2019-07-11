@@ -3,8 +3,20 @@ import Login from './Login/Login'
 import UserMenu from './UserMenu'
 
 class Header extends React.Component {
+	state = {
+		isFetched: false,
+	}
+
+	updateFetch = status => {
+		this.setState({
+			isFetched: status,
+		})
+	}
 	render() {
 		const { user } = this.props
+		if (this.state.isFetched) {
+			return 'Loading...'
+		}
 		return (
 			<nav className="navbar navbar-dark bg-primary">
 				<div className="container">
