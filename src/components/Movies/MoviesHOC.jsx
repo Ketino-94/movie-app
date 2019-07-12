@@ -78,12 +78,12 @@ export default Component =>
 
 		render() {
 			const { filterMovies } = this.state
-			const { toggleClassLike, toggleClassBookmark } = this.props
+			const { updateLike, updateBookmark } = this.props
 			return (
 				<Component
 					filterMovies={filterMovies}
-					toggleClassLike={toggleClassLike}
-					toggleClassBookmark={toggleClassBookmark}
+					updateLike={updateLike}
+					updateBookmark={updateBookmark}
 				/>
 			)
 		}

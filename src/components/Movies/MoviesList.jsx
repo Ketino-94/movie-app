@@ -3,15 +3,15 @@ import MovieItem from './MovieItem'
 import PropTypes from 'prop-types'
 import MoviesHOC from './MoviesHOC'
 
-const MoviesList = ({ filterMovies, toggleClassLike, toggleClassBookmark }) => (
+const MoviesList = ({ filterMovies, updateLike, updateBookmark }) => (
 	<div className="row">
 		{filterMovies.map(movie => {
 			return (
 				<div key={movie.id} className="col-6 mb-4">
 					<MovieItem
 						item={movie}
-						toggleClassLike={toggleClassLike}
-						toggleClassBookmark={toggleClassBookmark}
+						updateLike={updateLike}
+						updateBookmark={updateBookmark}
 					/>
 				</div>
 			)

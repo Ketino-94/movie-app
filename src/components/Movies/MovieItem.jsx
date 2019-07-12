@@ -17,19 +17,19 @@ export default class MovieItem extends React.Component {
 		isActiveBookmark: false,
 	}
 
-	toggleClassLike = () => {
-		this.props.toggleClassLike(this.props.item)
-		const currentClass = this.state.isActiveLike
+	toggleLike = () => {
+		const { isActiveLike } = this.state
+		this.props.updateLike(this.props.item)
 		this.setState({
-			isActiveLike: !currentClass,
+			isActiveLike: !isActiveLike,
 		})
 	}
 
-	toggleClassBookmark = () => {
-		this.props.toggleClassBookmark(this.props.item)
-		const currentClass = this.state.isActiveBookmark
+	toggleBookmark = () => {
+		const { isActiveBookmark } = this.state
+		this.props.updateBookmark(this.props.item)
 		this.setState({
-			isActiveBookmark: !currentClass,
+			isActiveBookmark: !isActiveBookmark,
 		})
 	}
 
@@ -54,11 +54,11 @@ export default class MovieItem extends React.Component {
 						<FontAwesomeIcon
 							className="mr-2"
 							icon={isActiveLike ? fasHeart : farHeart}
-							onClick={this.toggleClassLike}
+							onClick={this.toggleLike}
 						/>
 						<FontAwesomeIcon
 							icon={isActiveBookmark ? fasBookmark : farBookmark}
-							onClick={this.toggleClassBookmark}
+							onClick={this.toggleBookmark}
 						/>
 					</div>
 				</div>

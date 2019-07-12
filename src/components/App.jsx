@@ -23,6 +23,7 @@ export default class App extends Component {
 		page: 1,
 		favouriteMovie: [],
 		watchlistMovie: [],
+		filterWatchMovie: [],
 	}
 
 	updateUser = user => {
@@ -99,18 +100,29 @@ export default class App extends Component {
 		}
 	}
 
-	toggleClassLike = item => {
+	updateLike = item => {
 		const newItem = item
 		this.setState(prevState => ({
 			favouriteMovie: [...prevState.favouriteMovie, newItem],
 		}))
 	}
 
-	toggleClassBookmark = item => {
-		const newItem = item
-		this.setState(prevState => ({
-			watchlistMovie: [...prevState.watchlistMovie, newItem],
-		}))
+	updateBookmark = movie => {
+		const isAddedWatchMovie = this.state.watchlistMovie.some(
+			item => item.id === movie.id
+		)
+		if (isAddedWatchMovie) {
+			const filterWatchMovie = this.state.watchlistMovie.filter(item => {
+				return item.id !== movie.id
+			})
+			this.setState({
+				watchlistMovie: filterWatchMovie,
+			})
+		} else {
+			this.setState(prevState => ({
+				watchlistMovie: [...prevState.watchlistMovie, movie],
+			}))
+		}
 	}
 
 	render() {
@@ -121,6 +133,8 @@ export default class App extends Component {
 			user,
 			primary_release_year,
 			session_id,
+			favouriteMovie,
+			watchlistMovie,
 		} = this.state
 		return (
 			<AppContext.Provider
@@ -158,14 +172,14 @@ export default class App extends Component {
 									primary_release_year={primary_release_year}
 									filtersGenre={filtersGenre}
 									onChangePage={this.onChangePage}
-									toggleClassLike={this.toggleClassLike}
-									toggleClassBookmark={this.toggleClassBookmark}
+									updateLike={this.updateLike}
+									updateBookmark={this.updateBookmark}
 								/>
 							</div>
 							<div className="p-2">
 								<SelectionMovie
-									favouriteMovie={this.state.favouriteMovie}
-									watchlistMovie={this.state.watchlistMovie}
+									favouriteMovie={favouriteMovie}
+									watchlistMovie={watchlistMovie}
 								/>
 							</div>
 						</div>
