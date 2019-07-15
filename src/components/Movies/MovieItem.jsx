@@ -10,6 +10,7 @@ import {
 	faHeart as farHeart,
 	faBookmark as farBookmark,
 } from '@fortawesome/fontawesome-free-regular'
+import { fetchApi, API_URL, API_KEY_3 } from '../../api/api'
 
 export default class MovieItem extends React.Component {
 	state = {
@@ -20,6 +21,7 @@ export default class MovieItem extends React.Component {
 	toggleLike = () => {
 		const { isActiveLike } = this.state
 		this.props.updateLike(this.props.item)
+		this.handleLike()
 		this.setState({
 			isActiveLike: !isActiveLike,
 		})
@@ -28,9 +30,46 @@ export default class MovieItem extends React.Component {
 	toggleBookmark = () => {
 		const { isActiveBookmark } = this.state
 		this.props.updateBookmark(this.props.item)
+		this.handleBookmark()
 		this.setState({
 			isActiveBookmark: !isActiveBookmark,
 		})
+	}
+
+	handleLike = () => {
+		fetchApi(
+			`${API_URL}/account/${this.props.session_id}/favorite?api_key=${API_KEY_3}&session_id=${this.props.session_id}`,
+			{
+				method: 'POST',
+				mode: 'cors',
+				headers: {
+					'Content-type': 'application/json',
+				},
+				body: JSON.stringify({
+					media_type: 'movie',
+					media_id: this.props.item.id,
+					favorite: true,
+				}),
+			}
+		)
+	}
+
+	handleBookmark = () => {
+		fetchApi(
+			`${API_URL}/account/${this.props.session_id}/watchlist?api_key=${API_KEY_3}&session_id=${this.props.session_id}`,
+			{
+				method: 'POST',
+				mode: 'cors',
+				headers: {
+					'Content-type': 'application/json',
+				},
+				body: JSON.stringify({
+					media_type: 'movie',
+					media_id: this.props.item.id,
+					watchlist: true,
+				}),
+			}
+		)
 	}
 
 	render() {

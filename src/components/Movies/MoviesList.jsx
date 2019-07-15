@@ -3,7 +3,12 @@ import MovieItem from './MovieItem'
 import PropTypes from 'prop-types'
 import MoviesHOC from './MoviesHOC'
 
-const MoviesList = ({ filterMovies, updateLike, updateBookmark }) => (
+const MoviesList = ({
+	filterMovies,
+	updateLike,
+	updateBookmark,
+	session_id,
+}) => (
 	<div className="row">
 		{filterMovies.map(movie => {
 			return (
@@ -12,6 +17,7 @@ const MoviesList = ({ filterMovies, updateLike, updateBookmark }) => (
 						item={movie}
 						updateLike={updateLike}
 						updateBookmark={updateBookmark}
+						session_id={session_id}
 					/>
 				</div>
 			)

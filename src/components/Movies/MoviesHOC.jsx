@@ -78,12 +78,13 @@ export default Component =>
 
 		render() {
 			const { filterMovies } = this.state
-			const { updateLike, updateBookmark } = this.props
+			const { updateLike, updateBookmark, session_id } = this.props
 			return (
 				<Component
 					filterMovies={filterMovies}
 					updateLike={updateLike}
 					updateBookmark={updateBookmark}
+					session_id={session_id}
 				/>
 			)
 		}

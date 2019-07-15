@@ -100,11 +100,23 @@ export default class App extends Component {
 		}
 	}
 
-	updateLike = item => {
-		const newItem = item
-		this.setState(prevState => ({
-			favouriteMovie: [...prevState.favouriteMovie, newItem],
-		}))
+	updateLike = movie => {
+		const isAddedWatchMovie = this.state.favouriteMovie.some(
+			item => item.id === movie.id
+		)
+
+		if (isAddedWatchMovie) {
+			const filterLikeMovie = this.state.favouriteMovie.filter(item => {
+				return item.id !== movie.id
+			})
+			this.setState({
+				favouriteMovie: filterLikeMovie,
+			})
+		} else {
+			this.setState(prevState => ({
+				favouriteMovie: [...prevState.favouriteMovie, movie],
+			}))
+		}
 	}
 
 	updateBookmark = movie => {
@@ -169,6 +181,7 @@ export default class App extends Component {
 								<MoviesList
 									filters={filters}
 									page={page}
+									session_id={session_id}
 									primary_release_year={primary_release_year}
 									filtersGenre={filtersGenre}
 									onChangePage={this.onChangePage}
@@ -177,10 +190,12 @@ export default class App extends Component {
 								/>
 							</div>
 							<div className="p-2">
-								<SelectionMovie
-									favouriteMovie={favouriteMovie}
-									watchlistMovie={watchlistMovie}
-								/>
+								{session_id !== null && (
+									<SelectionMovie
+										favouriteMovie={favouriteMovie}
+										watchlistMovie={watchlistMovie}
+									/>
+								)}
 							</div>
 						</div>
 					</div>
