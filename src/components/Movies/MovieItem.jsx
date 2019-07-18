@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 export default class MovieItem extends React.Component {
 	render() {
@@ -13,7 +14,9 @@ export default class MovieItem extends React.Component {
 					alt=""
 				/>
 				<div className="card-body">
-					<h6 className="card-title">{item.title}</h6>
+					<Link className="card-title" to={`/movie/${item.id}`}>
+						{item.title}
+					</Link>
 					<div className="card-text">
 						Рейтинг: {item.vote_average} <br />{' '}
 						{moment(item.release_date).year()}

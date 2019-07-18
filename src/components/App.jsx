@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
-import Filters from './Filters/Filters'
-import MoviesList from './Movies/MoviesList'
+import { BrowserRouter, Route } from 'react-router-dom'
 import Header from './Header/Header'
 import { API_URL, API_KEY_3, fetchApi } from '../api/api'
 import Cookies from 'universal-cookie'
+import MoviesPage from './pages/MoviesPage/MoviesPage'
+import MoviePage from './pages/MoviePage/MoviePage'
 
 const cookies = new Cookies()
 
@@ -14,11 +15,6 @@ export default class App extends Component {
 	state = {
 		user: null,
 		session_id: null,
-		filters: {
-			sort_by: 'vote_average.desc',
-		},
-		primary_release_year: 2013,
-		filtersGenre: [],
 		page: 1,
 	}
 
@@ -97,56 +93,25 @@ export default class App extends Component {
 	}
 
 	render() {
-		const {
-			filters,
-			page,
-			filtersGenre,
-			user,
-			primary_release_year,
-			session_id,
-		} = this.state
+		const { user, session_id } = this.state
 		return (
-			<AppContext.Provider
-				value={{
-					user: user,
-					session_id,
-					updateUser: this.updateUser,
-					updateSessionId: this.updateSessionId,
-					onLogOut: this.onLogOut,
-				}}
-			>
-				<div>
-					<Header user={user} />
-					<div className="container">
-						<div className="row mt-4">
-							<div className="col-4">
-								<div className="card" style={{ width: '100%' }}>
-									<div className="card-body">
-										<h3>Фильтры:</h3>
-										<Filters
-											filters={filters}
-											page={page}
-											onChangePage={this.onChangePage}
-											onChangeGenres={this.onChangeGenres}
-											onChangeFilters={this.onChangeFilters}
-											onChangYear={this.onChangYear}
-										/>
-									</div>
-								</div>
-							</div>
-							<div className="col-8">
-								<MoviesList
-									filters={filters}
-									page={page}
-									primary_release_year={primary_release_year}
-									filtersGenre={filtersGenre}
-									onChangePage={this.onChangePage}
-								/>
-							</div>
-						</div>
+			<BrowserRouter>
+				<AppContext.Provider
+					value={{
+						user: user,
+						session_id,
+						updateUser: this.updateUser,
+						updateSessionId: this.updateSessionId,
+						onLogOut: this.onLogOut,
+					}}
+				>
+					<div>
+						<Header user={user} />
+						<Route exact path="/" component={MoviesPage} />
+						<Route path="/movie/:id" component={MoviePage} />
 					</div>
-				</div>
-			</AppContext.Provider>
+				</AppContext.Provider>
+			</BrowserRouter>
 		)
 	}
 }
