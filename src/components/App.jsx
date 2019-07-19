@@ -14,7 +14,7 @@ export const AppContext = React.createContext()
 export default class App extends Component {
 	state = {
 		user: null,
-		session_id: null,
+		session_id: cookies.get("session_id"),
 		filters: {
 			sort_by: 'vote_average.desc',
 		},
