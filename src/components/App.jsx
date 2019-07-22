@@ -2,107 +2,58 @@ import React, { Component } from 'react'
 
 import { BrowserRouter, Route } from 'react-router-dom'
 import Header from './Header/Header'
-import { API_URL, API_KEY_3, fetchApi } from '../api/api'
+import CallApi from '../api/api'
 import Cookies from 'universal-cookie'
 import MoviesPage from './pages/MoviesPage/MoviesPage'
 import MoviePage from './pages/MoviePage/MoviePage'
+import {
+	actionCreatorUpdateAuth,
+	actionCreatorLogOut,
+} from '../actions/actions'
+import { connect } from 'react-redux'
 
 const cookies = new Cookies()
 
 export const AppContext = React.createContext()
+class App extends React.Component {
+	// updateAuth = (user, session_id) => {
+	//   this.props.store.dispatch(
+	//     actionCreatorUpdateAuth({
+	//       user,
+	//       session_id
+	//     })
+	//   );
+	// };
 
-export default class App extends Component {
-	state = {
-		user: null,
-		session_id: null,
-		page: 1,
-	}
-
-	updateUser = user => {
-		this.setState({
-			user,
-		})
-	}
-
-	updateSessionId = session_id => {
-		cookies.set('session_id', session_id, {
-			path: '/',
-			maxAge: 2592000,
-		})
-		this.setState({
-			session_id,
-		})
-	}
-
-	onLogOut = () => {
-		cookies.remove('session_id')
-		this.setState({
-			session_id: null,
-			user: null,
-		})
-	}
-
-	onChangeFilters = e => {
-		const newFilters = {
-			...this.state.filter,
-			[e.target.name]: e.target.value,
-		}
-		this.setState({
-			filters: newFilters,
-		})
-	}
-
-	onChangePage = page => {
-		this.setState({
-			page,
-		})
-	}
-
-	onChangeGenres = id => {
-		if (this.state.filtersGenre.includes(id)) {
-			let newState = this.state.filtersGenre.filter(item => item !== id)
-			this.setState({
-				filtersGenre: newState,
-			})
-		} else {
-			this.setState(prevState => ({
-				filtersGenre: [...prevState.filtersGenre, id],
-			}))
-		}
-	}
-
-	onChangYear = e => {
-		const name = e.target.name
-		const value = e.target.value
-		this.setState(prevState => ({
-			[name]: value,
-			...prevState.primary_release_year,
-		}))
-	}
+	// onLogOut = () => {
+	//   this.props.store.dispatch(actionCreatorLogOut());
+	// };
 
 	componentDidMount() {
-		const session_id = cookies.get('session_id')
+		const { session_id } = this.props
 		if (session_id) {
-			fetchApi(
-				`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
-			).then(user => {
-				this.updateUser(user)
-				this.updateSessionId(session_id)
+			CallApi.get('/account', {
+				params: {
+					session_id,
+				},
+			}).then(user => {
+				this.props.updateAuth(user, session_id)
 			})
 		}
 	}
 
 	render() {
-		const { user, session_id } = this.state
-		return (
+		console.log(this.props)
+		const { user, session_id, isAuth, updateAuth, onLogOut } = this.props
+		return isAuth || !session_id ? (
 			<BrowserRouter>
 				<AppContext.Provider
 					value={{
-						user: user,
+						user,
 						session_id,
-						updateUser: this.updateUser,
-						updateSessionId: this.updateSessionId,
-						onLogOut: this.onLogOut,
+						isAuth,
+						updateAuth,
+						onLogOut,
 					}}
 				>
 					<div>
@@ -112,6 +63,34 @@ export default class App extends Component {
 					</div>
 				</AppContext.Provider>
 			</BrowserRouter>
+		) : (
+			<p>...Loading</p>
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		user: state.user,
+		session_id: state.session_id,
+		isAuth: state.isAuth,
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		updateAuth: (user, session_id) =>
+			dispatch(
+				actionCreatorUpdateAuth({
+					user,
+					session_id,
+				})
+			),
+		onLogOut: () => dispatch(actionCreatorLogOut()),
+	}
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App)

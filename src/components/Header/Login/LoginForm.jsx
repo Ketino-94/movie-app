@@ -1,5 +1,5 @@
 import React from 'react'
-import { API_URL, API_KEY_3, fetchApi } from '../../../api/api'
+import CallApi, { API_URL, API_KEY_3, fetchApi } from '../../../api/api'
 import AppContextHOC from '../../HOC/AppContextHOC'
 
 class LoginForm extends React.Component {
@@ -58,44 +58,31 @@ class LoginForm extends React.Component {
 		this.setState({
 			submitting: true,
 		})
-		fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+		let session_id = null
+		CallApi.get('/authentication/token/new')
 			.then(data => {
-				return fetchApi(
-					`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
-					{
-						method: 'POST',
-						mode: 'cors',
-						headers: {
-							'Content-type': 'application/json',
-						},
-						body: JSON.stringify({
-							username: this.state.username,
-							password: this.state.password,
-							request_token: data.request_token,
-						}),
-					}
-				)
+				return CallApi.post('/authentication/token/validate_with_login', {
+					body: {
+						username: this.state.username,
+						password: this.state.password,
+						request_token: data.request_token,
+					},
+				})
 			})
 			.then(data => {
-				return fetchApi(
-					`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
-					{
-						method: 'POST',
-						mode: 'cors',
-						headers: {
-							'Content-type': 'application/json',
-						},
-						body: JSON.stringify({
-							request_token: data.request_token,
-						}),
-					}
-				)
+				return CallApi.post('/authentication/session/new', {
+					body: {
+						request_token: data.request_token,
+					},
+				})
 			})
 			.then(data => {
-				this.props.updateSessionId(data.session_id)
-				return fetchApi(
-					`${API_URL}/account?api_key=${API_KEY_3}&session_id=${data.session_id}`
-				)
+				session_id = data.session_id
+				return CallApi.get('/account', {
+					params: {
+						session_id: data.session_id,
+					},
+				})
 			})
 			.then(user => {
 				this.setState(
@@ -103,12 +90,11 @@ class LoginForm extends React.Component {
 						submitting: false,
 					},
 					() => {
-						this.props.updateUser(user)
+						this.props.updateAuth(user, session_id)
 					}
 				)
 			})
 			.catch(error => {
-				console.log('error', error)
 				this.setState({
 					submitting: false,
 					errors: {
