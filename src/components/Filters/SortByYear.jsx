@@ -1,6 +1,31 @@
 import React, { Component } from 'react'
 
-const year = [2013, 2014, 2015, 2016, 2017, 2018, 2019]
+const year = [
+	{
+		value: 0,
+		year: 'Все года',
+	},
+	{
+		value: 2011,
+		year: 2011,
+	},
+	{
+		value: 2012,
+		year: 2012,
+	},
+	{
+		value: 2013,
+		year: 2013,
+	},
+	{
+		value: 2014,
+		year: 2014,
+	},
+	{
+		value: 2015,
+		year: 2015,
+	},
+]
 
 export default class SortByYear extends Component {
 	render() {
@@ -16,8 +41,8 @@ export default class SortByYear extends Component {
 					onChange={onChangYear}
 				>
 					{year.map(option => (
-						<option key={option} value={option}>
-							{option}
+						<option key={option.value} value={option.value}>
+							{option.year}
 						</option>
 					))}
 				</select>

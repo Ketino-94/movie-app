@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Header from './Header/Header'
 import { API_URL, API_KEY_3, fetchApi } from '../api/api'
 import Cookies from 'universal-cookie'
+
 import MoviesPage from './pages/MoviesPage/MoviesPage'
 import MoviePage from './pages/MoviePage/MoviePage'
 
@@ -14,7 +15,7 @@ export const AppContext = React.createContext()
 export default class App extends Component {
 	state = {
 		user: null,
-		session_id: null,
+		session_id: cookies.get('session_id'),
 		page: 1,
 	}
 

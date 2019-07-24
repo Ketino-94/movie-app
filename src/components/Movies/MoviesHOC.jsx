@@ -52,15 +52,21 @@ export default Component =>
 		}
 
 		getGenreMovie = () => {
-			console.log('filters', this.props.filtersGenre)
 			const filtersGenreMovie = this.state.movies.filter(movie => {
 				return movie.genre_ids.some(id => {
 					return this.props.filtersGenre.includes(id)
 				})
 			})
-			this.setState({
-				filterMovies: filtersGenreMovie,
-			})
+
+			if (this.props.filtersGenre.length === 0) {
+				this.setState({
+					filterMovies: this.state.movies,
+				})
+			} else {
+				this.setState({
+					filterMovies: filtersGenreMovie,
+				})
+			}
 		}
 
 		getYearMovie = () => {
@@ -70,14 +76,28 @@ export default Component =>
 					parseInt(this.props.primary_release_year, 10)
 				)
 			})
-			this.setState({
-				filterMovies: year_movie,
-			})
-			console.log('year-movie', parseInt(this.props.primary_release_year, 10))
+			if (this.props.primary_release_year > 0) {
+				this.setState({
+					filterMovies: year_movie,
+				})
+			} else {
+				this.setState({
+					filterMovies: this.state.movies,
+				})
+			}
 		}
 
 		render() {
 			const { filterMovies } = this.state
-			return <Component filterMovies={filterMovies} />
+			const { updateLike, updateBookmark, session_id } = this.props
+			console.log(session_id)
+			return (
+				<Component
+					filterMovies={filterMovies}
+					updateLike={updateLike}
+					updateBookmark={updateBookmark}
+					session_id={session_id}
+				/>
+			)
 		}
 	}
