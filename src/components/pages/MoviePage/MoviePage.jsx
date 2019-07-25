@@ -33,9 +33,6 @@ export default class MoviePage extends Component {
 						<div className="mb-3">
 							<h5> Рейтинг: {movie.vote_average} </h5>
 						</div>
-						{movie.genres.map(a => {
-							return a.name
-						})}
 						<p>{movie.overview}</p>
 					</div>
 				</div>
