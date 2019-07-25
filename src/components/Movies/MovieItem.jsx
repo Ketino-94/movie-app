@@ -6,7 +6,7 @@ import BookmarkMovie from './BookmarkMovie'
 
 export default class MovieItem extends React.Component {
 	render() {
-		const { item, updateBookmark, updateLike, session_id } = this.props
+		const { item, updateBookmark, updateLike, session_id, user } = this.props
 		return (
 			<div className="card" style={{ width: '100%' }}>
 				<img
@@ -28,11 +28,13 @@ export default class MovieItem extends React.Component {
 							item={item}
 							updateLike={updateLike}
 							session_id={session_id}
+							user={user}
 						/>
 						<BookmarkMovie
 							item={item}
 							updateBookmark={updateBookmark}
 							session_id={session_id}
+							user={user}
 						/>
 					</div>
 				</div>

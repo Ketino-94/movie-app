@@ -1,23 +1,28 @@
-import React, { Component} from 'react'
-import { library,} from '@fortawesome/fontawesome-svg-core'
-import { 	faBookmark as fasBookmark } from '@fortawesome/free-solid-svg-icons'
-import {faBookmark as farBookmark} from '@fortawesome/free-regular-svg-icons'
+import React, { Component } from 'react'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBookmark as fasBookmark } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark as farBookmark } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fetchApi, API_URL, API_KEY_3 } from '../../api/api'
 
 export default class BookmarkMovie extends Component {
-
 	state = {
 		isActiveBookmark: false,
 	}
 
 	toggleBookmark = () => {
-		const { isActiveBookmark } = this.state
-		this.props.updateBookmark(this.props.item)
-		this.handleBookmark()
-		this.setState({
-			isActiveBookmark: !isActiveBookmark,
-		})
+		if (this.props.user !== null) {
+			const { isActiveBookmark } = this.state
+			this.props.updateBookmark(this.props.item)
+			this.handleBookmark()
+			this.setState({
+				isActiveBookmark: !isActiveBookmark,
+			})
+		} else {
+			this.setState({
+				isActiveBookmark: false,
+			})
+		}
 	}
 
 	handleBookmark = () => {
@@ -39,8 +44,8 @@ export default class BookmarkMovie extends Component {
 	}
 
 	render() {
-		const {  isActiveBookmark } = this.state
-		return(
+		const { isActiveBookmark } = this.state
+		return (
 			<FontAwesomeIcon
 				icon={isActiveBookmark ? fasBookmark : farBookmark}
 				onClick={this.toggleBookmark}
@@ -49,4 +54,4 @@ export default class BookmarkMovie extends Component {
 	}
 }
 
-library.add( farBookmark, fasBookmark)
+library.add(farBookmark, fasBookmark)

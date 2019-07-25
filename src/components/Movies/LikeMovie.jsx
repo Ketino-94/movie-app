@@ -11,17 +11,16 @@ export default class LikeMovie extends Component {
 	}
 
 	toggleLike = () => {
-		const { isActiveLike } = this.state
-		this.props.updateLike(this.props.item)
-		this.handleLike()
-		if (this.props.session_id !== null) {
-			console.log(this.props.session_id)
+		if (this.props.user !== null) {
+			const { isActiveLike } = this.state
+			this.props.updateLike(this.props.item)
+			this.handleLike()
 			this.setState({
 				isActiveLike: !isActiveLike,
 			})
 		} else {
 			this.setState({
-				isActiveLike: isActiveLike,
+				isActiveLike: false,
 			})
 		}
 	}

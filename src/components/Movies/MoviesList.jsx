@@ -8,6 +8,7 @@ const MoviesList = ({
 	updateLike,
 	updateBookmark,
 	session_id,
+	user,
 }) => (
 	<div className="row">
 		{filterMovies.map(movie => {
@@ -18,6 +19,7 @@ const MoviesList = ({
 						updateLike={updateLike}
 						updateBookmark={updateBookmark}
 						session_id={session_id}
+						user={user}
 					/>
 				</div>
 			)

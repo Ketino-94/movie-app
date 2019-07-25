@@ -1,6 +1,7 @@
 import React from 'react'
 import { API_URL, API_KEY_3 } from '../../api/api'
 import moment from 'moment'
+import { AppContext } from '../App'
 
 export default Component =>
 	class MoviesHOC extends React.Component {
@@ -89,15 +90,19 @@ export default Component =>
 
 		render() {
 			const { filterMovies } = this.state
-			const { updateLike, updateBookmark, session_id } = this.props
-			console.log(session_id)
+			const { updateLike, updateBookmark } = this.props
 			return (
-				<Component
-					filterMovies={filterMovies}
-					updateLike={updateLike}
-					updateBookmark={updateBookmark}
-					session_id={session_id}
-				/>
+				<AppContext.Consumer>
+					{context => (
+						<Component
+							{...this.props}
+							{...context}
+							filterMovies={filterMovies}
+							updateLike={updateLike}
+							updateBookmark={updateBookmark}
+						/>
+					)}
+				</AppContext.Consumer>
 			)
 		}
 	}
