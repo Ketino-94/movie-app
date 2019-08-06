@@ -1,5 +1,3 @@
-import queryString from 'query-string'
-
 export const API_URL = 'https://api.themoviedb.org/3'
 
 export const API_KEY_3 = '57d3ab7999dd8eb3bb493818c3ee6668'
