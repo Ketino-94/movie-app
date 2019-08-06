@@ -16,7 +16,7 @@ export default Component =>
 		}
 
 		getMovies = (filters, page) => {
-			const { sort_by } = filters
+			const { sort_by, wiht_genres,  } = filters
 			const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}`
 			fetch(link)
 				.then(response => {
@@ -90,19 +90,11 @@ export default Component =>
 
 		render() {
 			const { filterMovies } = this.state
-			const { updateLike, updateBookmark } = this.props
 			return (
-				<AppContext.Consumer>
-					{context => (
 						<Component
 							{...this.props}
-							{...context}
 							filterMovies={filterMovies}
-							updateLike={updateLike}
-							updateBookmark={updateBookmark}
 						/>
-					)}
-				</AppContext.Consumer>
 			)
 		}
 	}

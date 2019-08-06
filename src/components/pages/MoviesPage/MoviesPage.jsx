@@ -48,7 +48,7 @@ export default class MoviesPage extends Component {
 		}
 	}
 
-	onChangYear = e => {
+	onChangeYear = e => {
 		const name = e.target.name
 		const value = e.target.value
 		this.setState(prevState => ({
@@ -117,7 +117,7 @@ export default class MoviesPage extends Component {
 									onChangePage={this.onChangePage}
 									onChangeGenres={this.onChangeGenres}
 									onChangeFilters={this.onChangeFilters}
-									onChangYear={this.onChangYear}
+									onChangeYear={this.onChangeYear}
 								/>
 							</div>
 						</div>

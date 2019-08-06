@@ -24,18 +24,8 @@ export default class MovieItem extends React.Component {
 						{moment(item.release_date).year()}
 					</div>
 					<div>
-						<LikeMovie
-							item={item}
-							updateLike={updateLike}
-							session_id={session_id}
-							user={user}
-						/>
-						<BookmarkMovie
-							item={item}
-							updateBookmark={updateBookmark}
-							session_id={session_id}
-							user={user}
-						/>
+						<LikeMovie item={item} updateLike={updateLike} />
+						<BookmarkMovie item={item} updateBookmark={updateBookmark} />
 					</div>
 				</div>
 			</div>

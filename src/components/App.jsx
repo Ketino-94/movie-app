@@ -17,11 +17,18 @@ export default class App extends Component {
 		user: null,
 		session_id: cookies.get('session_id'),
 		page: 1,
+		showLoginModal: false
 	}
 
 	updateUser = user => {
 		this.setState({
 			user,
+		})
+	}
+	
+	toggleLoginModal = () => {
+		this.setState({
+			showLoginModal: !this.state.showLoginModal 
 		})
 	}
 
@@ -104,6 +111,7 @@ export default class App extends Component {
 						updateUser: this.updateUser,
 						updateSessionId: this.updateSessionId,
 						onLogOut: this.onLogOut,
+						toggleLoginModal: this.toggleLoginModal
 					}}
 				>
 					<div>

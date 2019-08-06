@@ -4,8 +4,9 @@ import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fetchApi, API_URL, API_KEY_3 } from '../../api/api'
+import AppContextHOC from '../HOC/AppContextHOC';
 
-export default class LikeMovie extends Component {
+class LikeMovie extends Component {
 	state = {
 		isActiveLike: false,
 	}
@@ -56,3 +57,5 @@ export default class LikeMovie extends Component {
 }
 
 library.add(fasHeart, farHeart)
+
+export default AppContextHOC(LikeMovie)
