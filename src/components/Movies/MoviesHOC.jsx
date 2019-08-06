@@ -16,7 +16,7 @@ export default Component =>
 		}
 
 		getMovies = (filters, page) => {
-			const { sort_by, wiht_genres,  } = filters
+			const { sort_by } = filters
 			const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}`
 			fetch(link)
 				.then(response => {
