@@ -27,6 +27,9 @@
     "redux": "^4.0.4",
     "universal-cookie": "^4.0.0"
   },
+  "engines": {
+    "node": "8.9.4"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
